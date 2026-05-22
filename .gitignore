@@ -1,0 +1,11 @@
+node_modules/
+dist/
+database/
+public/
+
+.env
+.git
+*.zip
+
+Dockerfile
+.dockerignore
