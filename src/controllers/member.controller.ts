@@ -20,7 +20,7 @@ async function getMemberList(
     Querystring: { lang: LangType; type?: string };
     Params: MemberParamsRequestType;
   }>,
-  reply: FastifyReply<{ Reply: { 200: MemberListResType; 500: ErrorResType } }>
+  reply: FastifyReply<{ Reply: { 200: MemberListResType; 500: ErrorResType } }>,
 ): Promise<void> {
   const memberModel = new PeopleModel(request.lang, request.params.category);
 
@@ -54,7 +54,7 @@ async function getMember(
   request: FastifyRequest<{ Params: MemberParamsRequestType }>,
   reply: FastifyReply<{
     Reply: { 200: MemberResType; 500: ErrorResType; 404: { message: string } };
-  }>
+  }>,
 ): Promise<void> {
   const memberModel = new PeopleModel(request.lang, request.params.category);
 
@@ -96,7 +96,7 @@ async function createNewMember(
   }>,
   reply: FastifyReply<{
     Reply: { 200: CreateUpdateMemberResType; 500: ErrorResType };
-  }>
+  }>,
 ) {
   const body = request.body;
   const memberModel = new PeopleModel(request.lang, "members");
@@ -138,7 +138,7 @@ async function updateMember(
   }>,
   reply: FastifyReply<{
     Reply: { 200: CreateUpdateMemberResType; 500: ErrorResType };
-  }>
+  }>,
 ) {
   const body = request.body;
   const peopleMember = new PeopleModel(request.lang, request.params.category);
@@ -180,7 +180,7 @@ async function deleteMember(
   }>,
   reply: FastifyReply<{
     Reply: { 200: { message: string }; 500: ErrorResType };
-  }>
+  }>,
 ) {
   const peopleModel = new PeopleModel(request.lang, request.params.category);
 

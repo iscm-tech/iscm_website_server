@@ -9,10 +9,10 @@ import { getPool } from "./db/pool";
 
 class PeopleModel {
   pool: Pool;
-  category: "members" | "advisory" | "adjunctprofessors" | "network";
+  category: "members" | "advisory" | "intern" | "network";
   constructor(
     lang: LangType,
-    category: "members" | "advisory" | "adjunctprofessors" | "network",
+    category: "members" | "advisory" | "intern" | "network",
   ) {
     this.pool = getPool(lang);
 

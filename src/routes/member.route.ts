@@ -34,16 +34,11 @@ async function memberRoute(server: FastifyInstance) {
     {
       schema: {
         params: z.object({
-          category: z.enum([
-            "members",
-            "advisory",
-            "adjunctprofessors",
-            "network",
-          ]),
+          category: z.enum(["members", "intern", "advisory", "network"]),
         }),
       },
     },
-    getMemberList
+    getMemberList,
   );
 
   server.get<{
@@ -65,7 +60,7 @@ async function memberRoute(server: FastifyInstance) {
         body: CreateMemberBody,
       },
     },
-    createNewMember
+    createNewMember,
   );
 
   server.put<{
@@ -81,7 +76,7 @@ async function memberRoute(server: FastifyInstance) {
         body: UpdateMemberBody,
       },
     },
-    updateMember
+    updateMember,
   );
 
   server.delete<{
@@ -91,7 +86,7 @@ async function memberRoute(server: FastifyInstance) {
   }>(
     "/:category/:id_member",
     { preValidation: [requiredLoginedHook] },
-    deleteMember
+    deleteMember,
   );
 }
 

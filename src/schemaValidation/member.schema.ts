@@ -26,7 +26,7 @@ export const MemberSchema = z
 export type MemberType = z.TypeOf<typeof MemberSchema>;
 
 export const MemberCardSchema = z.object({
-  id: z.string(),
+  id: z.string().or(z.number()),
   name: z.string(),
   title: z.string(),
   order: z.number().default(-1),

@@ -19,11 +19,8 @@ import {
   UpdatePortalPostBodyType,
   UpdatePostBody,
 } from "@/schemaValidation/post.schema";
-import NewsModel from "@/models/news.model";
+import PostModel from "@/models/posts.model";
 import DraftPostModel from "@/models/draft.model";
-import EvolvingResearchModel from "@/models/evolving-research.model";
-import OpenAdmissionModel from "@/models/admission.model";
-import StudentLifeModel from "@/models/student_life.model";
 
 // Get Pending Post List
 async function getAllPendingPost(request: FastifyRequest, reply: FastifyReply) {
@@ -214,17 +211,17 @@ async function updatePortalPostController(
 
       switch (category) {
         case "news":
-          model = new NewsModel(lang);
+          model = new PostModel(lang, "news");
           break;
         case "student_life":
-          model = new StudentLifeModel(lang);
+          model = new PostModel(lang, "student_life");
           break;
         case "evolving_research":
-          model = new EvolvingResearchModel(lang);
+          model = new PostModel(lang, "evolving_research");
           break;
 
         case "open_admission":
-          model = new OpenAdmissionModel(lang);
+          model = new PostModel(lang, "open_admission");
           break;
         default:
           model = draftModel;

@@ -1,7 +1,7 @@
 import { MemberCardType, MemberType } from "@/schemaValidation/member.schema";
 
 export interface MemberParamsRequestType {
-  category: "members" | "advisory" | "adjunctprofessors" | "network";
+  category: "members" | "advisory" | "intern" | "network";
   id_member: string;
 }
 
