@@ -236,8 +236,8 @@ async function updateEvolvingPost(
     // ------------------------ END UPDATE ON PORTAL -------------------------------------
 
     await model.updatePost(id, {
-      metadata: body.metadata,
-      content: body.content,
+      metadata: baseMeta,
+      content: content,
     });
 
     reply.code(200).send({

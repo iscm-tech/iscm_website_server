@@ -27,7 +27,7 @@ export default async function processUploadPath(request: FastifyRequest) {
 
   try {
     if (!fs.existsSync(resolvedPath)) {
-      fs.mkdirSync(resolvedPath);
+      fs.mkdirSync(resolvedPath, { recursive: true });
     }
   } catch (err) {
     console.error(err);

@@ -198,8 +198,8 @@ async function updateEventPost(
     if (Number.isNaN(id)) throw new Error("Invalid Post ID");
 
     await eventModel.updatePost(id, {
-      metadata: body.metadata,
-      content: body.content,
+      metadata: meta,
+      content: content,
     });
 
     reply.code(200).send({
