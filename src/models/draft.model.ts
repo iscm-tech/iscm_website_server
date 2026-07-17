@@ -46,14 +46,15 @@ class DraftPostModel {
   async getTotalPage() {
     return Math.ceil(
       (await this.pool.query("SELECT COUNT(*) FROM posts.drafts")).rows[0]
-        .count / postPerPage,
+        .count / 12,
     );
   }
 
-  async getAllCard() {
-    // const offset = (Math.max(page, 1) - 1) * postPerPage;
+  async getAllCard(page: number) {
+    const offset = (Math.max(page, 1) - 1) * 12;
     const query = {
-      text: 'SELECT "id", title, "publishDate", thumbnail, author, categories, sdgs from posts.drafts ORDER BY "publishDate" DESC',
+      text: `SELECT "id", title, "publishDate", thumbnail, author, categories, sdgs from posts.drafts ORDER BY "publishDate" DESC LIMIT $1 OFFSET $2`,
+      values: [12, offset],
     };
     return this.pool.query(query);
   }

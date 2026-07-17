@@ -23,11 +23,16 @@ import PostModel from "@/models/posts.model";
 import DraftPostModel from "@/models/draft.model";
 
 // Get Pending Post List
-async function getAllPendingPost(request: FastifyRequest, reply: FastifyReply) {
+async function getAllPendingPost(
+  request: FastifyRequest<{ Querystring: { page: number } }>,
+  reply: FastifyReply
+) {
   const model = new DraftPostModel(request.lang);
   const postList: Array<PostCardType> = [];
+  const page = request.query.page || 1;
   try {
-    const rows = (await model.getAllCard()).rows;
+    const rows = (await model.getAllCard(page)).rows;
+    const totalPage = await model.getTotalPage();
 
     for (const row of rows) {
       row.lang = request.lang;
@@ -48,6 +53,7 @@ async function getAllPendingPost(request: FastifyRequest, reply: FastifyReply) {
 
     reply.code(200).send({
       data: postList,
+      totalPage,
       message: `Get Pending List Success`,
     });
   } catch (_e) {

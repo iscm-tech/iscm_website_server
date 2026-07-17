@@ -28,7 +28,11 @@ import { requiredLoginedHook } from "@/hooks/auth.hook";
 type StatusType = "success" | "error";
 
 async function portalRoute(server: FastifyInstance) {
-  server.get("/", { preValidation: [requiredLoginedHook] }, getAllPendingPost);
+  server.get<{ Querystring: { page: number } }>(
+    "/",
+    { preValidation: [requiredLoginedHook] },
+    getAllPendingPost,
+  );
 
   server.get<{
     Params: PostParamsRequestType;
@@ -85,10 +89,10 @@ async function portalRoute(server: FastifyInstance) {
     Querystring: { lang: LangType };
     Params: {
       category:
-        | "news"
-        | "student_life"
-        | "evolving_research"
-        | "open_admission";
+      | "news"
+      | "student_life"
+      | "evolving_research"
+      | "open_admission";
       id: string;
     };
   }>("/accept/:category/:id", acceptPostController);
