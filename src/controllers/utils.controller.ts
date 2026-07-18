@@ -8,11 +8,19 @@ import {
 } from "@/schemaValidation/post.schema";
 import { FastifyReply, FastifyRequest } from "fastify";
 
-async function getLatestPosts(request: FastifyRequest, reply: FastifyReply) {
+async function getLatestPosts(
+  request: FastifyRequest<{
+    Querystring: { lang: string; page?: number; postPerPage?: number };
+  }>,
+  reply: FastifyReply,
+) {
   const model = new LatestPostModel(request.lang);
+  const page = request.query.page || 1;
+  const limit = request.query.postPerPage || 6;
 
   try {
-    const rows = (await model.getAllCard()).rows;
+    const rows = (await model.getAllCard(page, limit)).rows;
+    const totalPage = await model.getTotalCardPage(limit);
     const latest: PostCardType[] = [];
 
     for (const row of rows) {
@@ -28,6 +36,7 @@ async function getLatestPosts(request: FastifyRequest, reply: FastifyReply) {
     reply.code(200).send({
       message: "Get Latest Posts Success",
       data: latest,
+      totalPage: totalPage,
     });
   } catch (_e) {
     const e: Error = _e as Error;
@@ -38,10 +47,19 @@ async function getLatestPosts(request: FastifyRequest, reply: FastifyReply) {
   }
 }
 
-async function getPortalPost(request: FastifyRequest, reply: FastifyReply) {
+async function getPortalPost(
+  request: FastifyRequest<{
+    Querystring: { lang: string; page?: number; postPerPage?: number };
+  }>,
+  reply: FastifyReply,
+) {
   const model = new LatestPostModel(request.lang);
+  const page = request.query.page || 1;
+  const limit = request.query.postPerPage || 4;
+  
   try {
-    const rows = (await model.getAllPortalCard()).rows;
+    const rows = (await model.getAllPortalCard(page, limit)).rows;
+    const totalPage = await model.getTotalPortalPage(limit);
     const latest: LatestAdmissionCardType[] = [];
 
     for (const row of rows) {
@@ -57,6 +75,7 @@ async function getPortalPost(request: FastifyRequest, reply: FastifyReply) {
     reply.code(200).send({
       message: "Get Latest Posts Success",
       data: latest,
+      totalPage: totalPage,
     });
   } catch (_e) {
     const e: Error = _e as Error;
