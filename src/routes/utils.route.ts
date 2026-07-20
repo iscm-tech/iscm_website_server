@@ -22,35 +22,35 @@ const BodyPin = z.object({
 });
 
 async function utilsRoute(server: FastifyInstance) {
-  server.post(
-    "/update-table",
-    async (
-      request: FastifyRequest<{
-        Body: { lang: string; sql: string; values: any[] };
-      }>,
-      reply: FastifyReply,
-    ) => {
-      const lang: string = request.body.lang;
-      const sql = request.body.sql;
-      const values = request.body.values;
+  // server.post(
+  //   "/update-table",
+  //   async (
+  //     request: FastifyRequest<{
+  //       Body: { lang: string; sql: string; values: any[] };
+  //     }>,
+  //     reply: FastifyReply,
+  //   ) => {
+  //     const lang: string = request.body.lang;
+  //     const sql = request.body.sql;
+  //     const values = request.body.values;
 
-      const model = new Pool({
-        user: envConfig.POSTGRES_USER,
-        host: envConfig.POSTGRES_DB_HOST,
-        database:
-          lang === "en" ? envConfig.POSTGRES_DB_EN : envConfig.POSTGRES_DB_VI,
-        password: envConfig.POSTGRES_PASSWORD,
-        port: envConfig.POSTGRES_DB_PORT,
-        max: 500,
-        idleTimeoutMillis: 30000,
-        connectionTimeoutMillis: 2000,
-      });
+  //     const model = new Pool({
+  //       user: envConfig.POSTGRES_USER,
+  //       host: envConfig.POSTGRES_DB_HOST,
+  //       database:
+  //         lang === "en" ? envConfig.POSTGRES_DB_EN : envConfig.POSTGRES_DB_VI,
+  //       password: envConfig.POSTGRES_PASSWORD,
+  //       port: envConfig.POSTGRES_DB_PORT,
+  //       max: 500,
+  //       idleTimeoutMillis: 30000,
+  //       connectionTimeoutMillis: 2000,
+  //     });
 
-      const repsonse = await model.query(sql, values);
+  //     const repsonse = await model.query(sql, values);
 
-      reply.code(200).send(repsonse);
-    },
-  );
+  //     reply.code(200).send(repsonse);
+  //   },
+  // );
 
   server.get<{
     Params: PostParamsRequestType;
